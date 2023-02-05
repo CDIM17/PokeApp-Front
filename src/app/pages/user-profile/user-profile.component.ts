@@ -34,25 +34,37 @@ export class UserProfileComponent implements OnInit {
       createdDate: [this.user.createdDate, Validators.required],
       role: [this.user.role, Validators.required],
     });
+
   }
 
   actualizarPerfil() {
 
-    this.usuarioService.updateUser(this.profileForm.value,this.authService.uid || '').subscribe(
-      (data) => {
-        //const { nombre, email } = this.profileForm.value;
-        this.user = {
-          ...this.user,
-          ...this.profileForm.value
-        }
+    console.log(this.profileForm.value);
 
-        Swal.fire('Usuario Actualizado', 'Cambios fueron Guardados', 'success');
-      },
-      (error) => {
-        console.log(error);
-        Swal.fire('Error', error.error.msg, 'error');
+    if(this.profileForm.valid)
+    {
+      this.usuarioService
+        .updateUser(this.profileForm.value, this.authService.uid || '')
+        .subscribe(
+          (data) => {
+            //const { nombre, email } = this.profileForm.value;
+            this.user = {
+              ...this.user,
+              ...this.profileForm.value,
+            };
+
+            Swal.fire(
+              'Usuario Actualizado',
+              'Cambios fueron Guardados',
+              'success'
+            );
+          },
+          (error) => {
+            console.log(error);
+            Swal.fire('Error', error.error.msg, 'error');
+          }
+        );
       }
-    );
   }
 
 }

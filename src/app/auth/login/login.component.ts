@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
+import { MatError } from '@angular/material/form-field';
+
 
 
 @Component({
@@ -34,28 +36,33 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   login() {
-    this.authService.login(this.loginForm.value).subscribe(
-      (data) => {
-        if (this.loginForm.get('remember')?.value) {
-          localStorage.setItem(
-            'email',
-            this.loginForm.get('email')?.value || ''
-          );
-          localStorage.setItem(
-            'remember',
-            (this.loginForm.get('remember')?.value || '').toString()
-          );
-        } else {
-          localStorage.removeItem('email');
-          localStorage.removeItem('remember');
-        }
 
-        //Navegar al Dashboard
-        this.router.navigate(['/pages/pokemons']);
-      },
-      (err) => {
-        Swal.fire('Error', err.error.msg, 'error');
-      }
-    );
+    if(this.loginForm.valid)
+    {
+      this.authService.login(this.loginForm.value).subscribe(
+        (data) => {
+          if (this.loginForm.get('remember')?.value) {
+            localStorage.setItem(
+              'email',
+              this.loginForm.get('email')?.value || ''
+            );
+            localStorage.setItem(
+              'remember',
+              (this.loginForm.get('remember')?.value || '').toString()
+            );
+          } else {
+            localStorage.removeItem('email');
+            localStorage.removeItem('remember');
+          }
+
+          //Navegar al Dashboard
+          this.router.navigate(['/pages/pokemons']);
+        },
+        (err) => {
+          Swal.fire('Error', err.error.message, 'error');
+        }
+      );
+    }
+
   }
 }

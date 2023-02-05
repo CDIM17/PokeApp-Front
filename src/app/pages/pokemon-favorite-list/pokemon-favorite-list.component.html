@@ -2,7 +2,7 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <input type="text" class="form-control" placeholder="Search Pokemon"  #txtTermino>
+        <input type="text" class="form-control" placeholder="Search Pokemon"  #txtTermino (keyup)="searchFavoritePokemons(txtTermino.value)">
       </div>
     </div>
   </div>
@@ -45,40 +45,6 @@
               </tr>
             </tbody>
           </table>
-        </div>
-
-        <div class="row text-right">
-
-          <div class="col col-sm-5">
-
-          </div>
-          <div class=" col col-sm-2">
-
-            <!-- <select class="form-control input-sm" (change)="changeLimit($event)">
-              <option [value]="5">5</option>
-              <option [value]="10">10</option>
-              <option [value]="20">20</option>
-              <option [value]="50">50</option>
-            </select> -->
-
-          </div>
-
-          <div class="col col-sm-2">
-
-            <!-- {{offset}}-{{offset + limit}} of {{totalPokemons}} -->
-
-          </div>
-
-          <div class="col col-sm-3">
-
-            <!-- <div *ngIf="txtTermino.value.length === 0">
-              <button class="btn btn-secondary" (click)="changePage(-5)" *ngIf="offset !== 0">Previous</button>
-              &nbsp;
-              <button class="btn btn-secondary" (click)="changePage(5)">Next</button>
-            </div> -->
-
-          </div>
-
         </div>
 
       </div>

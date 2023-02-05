@@ -3,10 +3,10 @@
     <div class="card">
       <div class="card-body">
 
-        <h4 class="card-title">Mi Perfil de Usuario</h4>
-        <h6 class="card-subtitle">Ajustes</h6>
+        <h4 class="card-title">My User Profile</h4>
+        <h6 class="card-subtitle">Settings</h6>
 
-        <form class="form p-t-20" [formGroup]="profileForm" (ngSubmit)="actualizarPerfil()">
+        <form class="form p-t-20" [formGroup]="profileForm" (ngSubmit)="actualizarPerfil()" #form="ngForm">
 
           <div class="form-group">
             <label for="exampleInputuname">FirstName</label>
@@ -15,6 +15,7 @@
 
               <input type="text" class="form-control" id="exampleInputuname" placeholder="FirstName" formControlName="firstName">
             </div>
+            <mat-error *ngIf="form.submitted && profileForm.controls['firstName'].invalid">This field is required</mat-error>
           </div>
 
           <div class="form-group">
@@ -24,6 +25,7 @@
 
               <input type="text" class="form-control" placeholder="LastName" formControlName="lastName">
             </div>
+            <mat-error *ngIf="form.submitted && profileForm.controls['lastName'].invalid">This field is required</mat-error>
           </div>
 
           <div class="form-group">
@@ -33,6 +35,9 @@
 
               <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" formControlName="email" >
             </div>
+            <mat-error *ngIf="form.submitted && profileForm.controls['email'].value === ''">This field is required</mat-error>
+            <mat-error *ngIf="form.submitted && profileForm.controls['email'].value !== '' && profileForm.controls['email'].invalid">Invalid Email Format</mat-error>
+
           </div>
 
           <div class="form-group">
@@ -42,6 +47,7 @@
 
               <input type="password" class="form-control"  placeholder="Enter Password" formControlName="password">
             </div>
+            <mat-error *ngIf="form.submitted && profileForm.controls['password'].invalid">This field is required</mat-error>
           </div>
 
           <div class="form-group">
@@ -49,7 +55,7 @@
             <div class="input-group">
               <div class="input-group-addon"><i class="ti-date"></i></div>
 
-              <input type="text" class="form-control"  placeholder="createdDate" formControlName="createdDate">
+              <input type="text" class="form-control"  placeholder="createdDate" formControlName="createdDate" readonly >
             </div>
           </div>
 
@@ -64,7 +70,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-success waves-effect waves-light m-r-10" [disabled]="profileForm.invalid">
+          <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
             <i class="fa fa-save"></i>
             Guardar Cambios
           </button>

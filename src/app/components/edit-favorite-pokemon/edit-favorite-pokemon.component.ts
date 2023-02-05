@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PokemonFavorite } from '../../interfaces/pokemon-favorite.interface';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-favorite-pokemon',
@@ -14,7 +15,8 @@ export class EditFavoritePokemonComponent implements OnInit {
 
   constructor(
     public _formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<EditFavoritePokemonComponent>
+    public dialogRef: MatDialogRef<EditFavoritePokemonComponent>,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -33,21 +35,20 @@ export class EditFavoritePokemonComponent implements OnInit {
   }
 
   submitForm() {
-
     this.pokemonFavorite = {
-      name:this.pokemonFavorite.name,
+      name: this.pokemonFavorite.name,
       ...this.editPokemonForm.value,
-      imageUrl:this.pokemonFavorite.imageUrl,
-      createdAt:this.pokemonFavorite.createdAt
-    }
+      imageUrl: this.pokemonFavorite.imageUrl,
+      createdAt: this.pokemonFavorite.createdAt,
+    };
 
-    if(this.editPokemonForm.valid)
-    {
+    if (this.editPokemonForm.valid) {
       this.closeModal();
+      this.toastr.success('Ok', 'Pokemon Updated!!');
     }
   }
 
   closeModal() {
-      this.dialogRef.close(this.pokemonFavorite);
+    this.dialogRef.close(this.pokemonFavorite);
   }
 }

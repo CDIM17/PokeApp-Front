@@ -4,6 +4,8 @@ import { PokemonList, Result } from '../../interfaces/pokemon-list.interface';
 import { environment } from '../../../environments/environment';
 import { SessionStorageService } from '../../services/session-storage.service';
 import { PokemonFavorite } from '../../interfaces/pokemon-favorite.interface';
+import { ToastrService } from 'ngx-toastr';
+
 
 const base_url = environment.base_url;
 
@@ -13,26 +15,27 @@ const base_url = environment.base_url;
   styleUrls: ['./pokemon-list.component.css'],
 })
 export class PokemonListComponent implements OnInit {
-
   public totalPokemons: number = 0;
   public pokemons: Result[] = [];
 
   public offset: number = 0;
   public limit: number = 5;
 
-  constructor(public pokemonService: PokemonService,
-              private SessionStorageService:SessionStorageService) {}
+  constructor(
+    public pokemonService: PokemonService,
+    private SessionStorageService: SessionStorageService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getPokemons();
     this.SessionStorageService.getItems();
-
   }
 
   getPokemons() {
     this.pokemonService
       .getPokemons(this.offset, this.limit)
-      .subscribe((data:PokemonList) => {
+      .subscribe((data: PokemonList) => {
         this.pokemons = data.results;
         this.totalPokemons = data.count;
       });
@@ -56,11 +59,8 @@ export class PokemonListComponent implements OnInit {
   }
 
   searchPokemon(termino: string) {
-
-    if(termino != '')
-    {
-      this.pokemonService.searchPokemon(termino).subscribe(data => {
-
+    if (termino != '') {
+      this.pokemonService.searchPokemon(termino).subscribe((data) => {
         const pokemon = [
           {
             name: data.name,
@@ -68,18 +68,14 @@ export class PokemonListComponent implements OnInit {
           },
         ];
 
-        this.pokemons = pokemon
-      })
-    }
-    else
-    {
+        this.pokemons = pokemon;
+      });
+    } else {
       this.getPokemons();
     }
-
   }
 
-  saveFavoritePokemon(pokemon:Result)
-  {
+  saveFavoritePokemon(pokemon: Result) {
     const pokemonFavorite: PokemonFavorite = {
       name: pokemon.name,
       alias: pokemon.name + ' Alias',
@@ -88,15 +84,17 @@ export class PokemonListComponent implements OnInit {
     };
 
     this.SessionStorageService.createItem(pokemonFavorite);
+
+    this.toastr.success('Ok','Added to Favorite!!')
   }
 
-  isFavorite(pokemon:Result)
-  {
-    return this.SessionStorageService.pokemonFavorites.filter(x => x.name === pokemon.name);
+  isFavorite(pokemon: Result) {
+    return this.SessionStorageService.pokemonFavorites.filter(
+      (x) => x.name === pokemon.name
+    );
   }
 
-  deleteFavorite(pokemon:Result)
-  {
+  deleteFavorite(pokemon: Result) {
     const pokemonFavorite: PokemonFavorite = {
       name: pokemon.name,
       alias: pokemon.name + ' Alias',
@@ -105,5 +103,8 @@ export class PokemonListComponent implements OnInit {
     };
 
     this.SessionStorageService.deleteItem(pokemonFavorite);
+
+    this.toastr.success('Ok', 'Removed from Favorite!!');
+
   }
 }

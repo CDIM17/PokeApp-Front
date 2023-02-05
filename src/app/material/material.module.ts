@@ -19,6 +19,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatError } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [],
@@ -64,6 +65,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatStepperModule,
     MatIconModule,
     MatPaginatorModule,
+    MatError
   ],
 })
 export class MaterialModule {}

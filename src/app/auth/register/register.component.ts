@@ -24,15 +24,19 @@ export class RegisterComponent implements OnInit {
       terminos: [false, Validators.required],
     },
     {
-      validators: this.passwordsIguales('password', 'password2'),
+      validators: this.validateSamePasswords('password', 'password2'),
     }
   );
 
-  constructor(private fb: FormBuilder, private userService: UserService,private router:Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
 
-  crearUsuario() {
+  createUser() {
     this.formSubmitted = true;
 
     if (this.registerForm.invalid) {
@@ -41,7 +45,7 @@ export class RegisterComponent implements OnInit {
 
     this.userService.createUser(this.registerForm.value).subscribe(
       (data) => {
-          this.router.navigate(['/pages/pokemons']);
+        this.router.navigate(['/pages/pokemons']);
       },
       (err) => {
         Swal.fire('Error', err.error.msg, 'error');
@@ -50,7 +54,7 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  campoNoValido(campo: string): boolean {
+  invalidField(campo: string): boolean {
     if (this.registerForm.get(campo)?.invalid && this.formSubmitted) {
       return true;
     } else {
@@ -58,11 +62,11 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  aceptaTerminos() {
+  acceptTerms() {
     return !this.registerForm.get('terminos')?.value && this.formSubmitted;
   }
 
-  contrasenasNoValidas() {
+  notValidPasswords() {
     const pass1 = this.registerForm.get('password')?.value;
     const pass2 = this.registerForm.get('password2')?.value;
 
@@ -73,7 +77,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  passwordsIguales(pass1: string, pass2: string) {
+  validateSamePasswords(pass1: string, pass2: string) {
     return (formGroup: FormGroup) => {
       const pass1Control = formGroup.get(pass1);
       const pass2Control = formGroup.get(pass2);

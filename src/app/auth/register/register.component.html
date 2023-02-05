@@ -3,7 +3,7 @@
   <div class="login-box card">
     <div class="card-body">
 
-      <form class="form-horizontal form-material" id="loginform" action="index.html" (ngSubmit)="crearUsuario()"
+      <form class="form-horizontal form-material" id="loginform" action="index.html" (ngSubmit)="createUser()"
         [formGroup]="registerForm" autocomplete="off">
 
         <a href="javascript:void(0)" class="text-center db"><img src="../assets/images/logo-icon.png" alt="Home" /><br /></a>
@@ -45,10 +45,11 @@
 
         <div class="row">
           <div class="col text-danger">
-            <p *ngIf="campoNoValido('nombre')">* El nombre es obligatorio</p>
-            <p *ngIf="campoNoValido('email')">* El email es obligatorio y debe ser valido</p>
-            <p *ngIf="contrasenasNoValidas()">* Las Password deben ser iguales</p>
-            <p *ngIf="aceptaTerminos()">* Debe aceptar los terminos de uso</p>
+            <p *ngIf="invalidField('firstName')">* The firstname is required</p>
+            <p *ngIf="invalidField('firstName')">* The lastName is required</p>
+            <p *ngIf="invalidField('email')">* The email is required and must be valid</p>
+            <p *ngIf="notValidPasswords()">* Both Passwords must be the same</p>
+            <p *ngIf="acceptTerms()">* You must accept the terms of use</p>
           </div>
         </div>
 
