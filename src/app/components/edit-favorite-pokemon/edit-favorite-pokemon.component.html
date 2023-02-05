@@ -1,0 +1,31 @@
+<h1 class="text-white">Edit Favorite Pokemon</h1>
+
+<form [formGroup]="editPokemonForm" (ngSubmit)="submitForm()" #form="ngForm">
+
+<p>
+  <mat-form-field>
+    <input matInput class="form-control" type="text" placeholder="Name" formControlName="name" >
+  </mat-form-field>
+</p>
+
+<p>
+  <mat-form-field>
+    <input matInput class="form-control" type="text" placeholder="Alias" formControlName="alias">
+  </mat-form-field>
+  <mat-error *ngIf="form.submitted && editPokemonForm.controls['alias'].status === 'INVALID'">This Field is required</mat-error>
+</p>
+
+<p>
+  <mat-form-field>
+    <input matInput class="form-control" type="text" placeholder="Created At" formControlName="createdAt">
+  </mat-form-field>
+</p>
+
+<img [src]="pokemonFavorite.imageUrl" alt="">
+
+<br><br>
+<button class="btn btn-success"> <i class="fa fa-edit"></i> Edit</button>
+<button type="button" class="btn btn-danger" (click)="closeModal()"> <i class="fa fa-close"></i> Close</button>
+
+
+</form>

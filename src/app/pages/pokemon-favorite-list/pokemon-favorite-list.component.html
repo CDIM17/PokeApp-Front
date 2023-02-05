@@ -1,0 +1,87 @@
+<div class="row animated FadeIn fast">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input type="text" class="form-control" placeholder="Search Pokemon"  #txtTermino>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated FadeIn fast">
+  <div class="div col-12">
+    <div class="div card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">Total of Pokemons ({{pokemons.length}})</h4> -->
+        <h6 class="card-subtitle">Favorite Pokemons Registered in the Application.</h6>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="">Created At</th>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Alias</th>
+                <th>Favorite</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr *ngFor="let pokemon of pokemonsFavorite; let i = index">
+
+                <td>{{pokemon.createdAt | date}}</td>
+                <td class="text-center">
+                  <img [src]="pokemon.imageUrl" alt="Avatar de Usuario" class="avatar cursor">
+                </td>
+                <td>{{pokemon.name}}</td>
+
+                <td class="text-nowrap text-center">
+                 {{pokemon.alias}}
+                </td>
+                <td>
+                  <button class="btn btn-primary" (click)="openModal(pokemon)"> <i class="fa fa-edit"></i> Edit</button>
+                  <button class="btn btn-danger" (click)="deleteFavorite(pokemon)"> <i class="fa fa-trash"></i> Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row text-right">
+
+          <div class="col col-sm-5">
+
+          </div>
+          <div class=" col col-sm-2">
+
+            <!-- <select class="form-control input-sm" (change)="changeLimit($event)">
+              <option [value]="5">5</option>
+              <option [value]="10">10</option>
+              <option [value]="20">20</option>
+              <option [value]="50">50</option>
+            </select> -->
+
+          </div>
+
+          <div class="col col-sm-2">
+
+            <!-- {{offset}}-{{offset + limit}} of {{totalPokemons}} -->
+
+          </div>
+
+          <div class="col col-sm-3">
+
+            <!-- <div *ngIf="txtTermino.value.length === 0">
+              <button class="btn btn-secondary" (click)="changePage(-5)" *ngIf="offset !== 0">Previous</button>
+              &nbsp;
+              <button class="btn btn-secondary" (click)="changePage(5)">Next</button>
+            </div> -->
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  base_url: 'https://pokeapi.co/api/v2',
+  backend_url:'http://localhost:3000/api/v1'
 };
 
 /*
