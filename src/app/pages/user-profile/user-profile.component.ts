@@ -39,8 +39,6 @@ export class UserProfileComponent implements OnInit {
 
   actualizarPerfil() {
 
-    console.log(this.profileForm.value);
-
     if(this.profileForm.valid)
     {
       this.usuarioService

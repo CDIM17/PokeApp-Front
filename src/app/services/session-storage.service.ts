@@ -10,9 +10,11 @@ export class SessionStorageService {
   constructor() {}
 
   getItems() {
-    this.pokemonFavorites = JSON.parse(
-      sessionStorage.getItem('favorite') || ''
-    );
+    if (sessionStorage.getItem('favorite')) {
+      this.pokemonFavorites = JSON.parse(
+        sessionStorage.getItem('favorite') || ''
+      );
+    }
   }
 
   createItem(pokemonFavorite: PokemonFavorite) {
